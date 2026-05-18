@@ -1,0 +1,409 @@
+/* ============================================================
+   ML.CSS - MOBILE LEGENDS
+   ============================================================ */
+
+body {
+  font-family: 'Nunito Sans', sans-serif;
+  margin: 0;
+  min-height: 100vh; /* ← background penuh */
+  background: linear-gradient(180deg, #4fa3b1, #ff6f61);
+}
+
+/* LOGO */
+
+.logo img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.logo span {
+  font-family: 'Odor Mean Chey', cursive;
+  white-space: nowrap;
+}
+
+/* SEARCH + CART */
+
+.search-box {
+  position: relative;
+  width: auto;
+}
+
+#searchBar {
+  width: 115px !important;
+  height: 20px;
+  padding: 5px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.3) !important;
+  background: rgba(255,255,255,0.25);
+  font-size: 14px;
+  font-family: 'Nunito Sans', sans-serif;
+  box-sizing: content-box;
+}
+
+#searchBar:focus {
+  background: white;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+  outline: none;
+}
+
+.clear-btn {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 14px;
+  cursor: pointer;
+  display: none;
+  color: rgba(0,0,0,0.5);
+}
+
+#searchResults {
+  position: absolute;
+  top: 45px;
+  left: 0;
+  width: 220px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  display: none;
+  overflow-y: auto;
+  z-index: 1000;
+}
+
+.search-item {
+  padding: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+}
+
+.search-item:hover { background: #f5f5f5; }
+.highlight { color: #ff4444; font-weight: bold; }
+
+/* CART */
+
+.cart {
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+#cart-count {
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  background: red;
+  color: white;
+  font-size: 11px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ========================
+   CART POPUP
+======================== */
+
+.cart-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  background: linear-gradient(180deg, #4fa3b1, #ff6f61);
+
+  padding: 20px;
+  border-radius: 14px;
+  width: 300px;
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+  display: none;
+  z-index: 9998;
+}
+
+.cart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.cart-header h3 { margin: 0; font-size: 18px; }
+
+#closeCart { cursor: pointer; font-size: 18px; color: #999; }
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.cart-item button {
+  background: none;
+  border: none;
+  color: red;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.cart-total {
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 14px;
+  border-top: 2px solid #eee;
+  padding-top: 10px;
+}
+
+/* ========================
+   CART PAYMENT
+======================== */
+
+.cart-section-title {
+  font-size: 13px;
+  font-weight: bold;
+  color: #685AFF;
+  margin: 14px 0 8px;
+  font-family: 'Londrina Solid', cursive;
+}
+
+.cart-payment {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #f5f0e0;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 2px solid transparent;
+}
+
+.cart-payment img {
+  width: 50px;
+  height: auto;
+  object-fit: contain;
+}
+
+.cart-payment span { font-size: 13px; color: #333; }
+
+.cart-payment.selected {
+  border: 2px solid #685AFF;
+  background: #e8e0c8;
+  box-shadow: 0 0 8px rgba(104,90,255,0.4);
+}
+
+#checkoutBtn {
+  margin-top: 12px;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  background: #685AFF;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+#checkoutBtn:hover { background: #574aee; }
+
+/* APP TITLE */
+
+.app-title {
+  background: #48A7E2;
+  color: white;
+  padding: 10px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 252px;
+  height: 40px;
+  margin: auto;
+  margin-bottom: 20px;
+  font-family: 'Odor Mean Chey', cursive;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.app-title img {
+  width: 25px;
+  height: 25px;
+  object-fit: contain;
+}
+
+/* BOX */
+
+.box {
+  background: #dcd6c0;
+  border-radius: 16px;
+  padding: 16px;
+  margin-top: 20px;
+  width: 298px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* USER BOX */
+
+.user-box { background: #e8e4d0; }
+
+.user-inputs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.input-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.input-group label {
+  font-size: 12px;
+  font-weight: 600;
+  font-family: 'Utendo', sans-serif;
+  color: #000;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(0,0,0,0.1);
+  font-size: 13px;
+  box-sizing: border-box;
+}
+
+.user-info {
+  font-size: 11px;
+  color: #000;
+  line-height: 1.5;
+  margin: 0;
+  font-family: 'Utendo', sans-serif;
+}
+
+/* BOX TITLE */
+
+.box-title {
+  background: #576A8F;
+  color: white;
+  padding: 10px 14px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Utendo', sans-serif;
+  font-weight: bold;
+}
+
+.user-title { background: #685AFF; }
+
+/* PAKET */
+
+.paket {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+/* CARD */
+
+.card {
+  background: #c8e6f5;
+  padding: 10px;
+  border-radius: 12px;
+  height: auto;
+  min-height: 100px;
+  cursor: pointer;
+  transition: 0.2s;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  line-height: 1.2;
+  border: 2px solid transparent;
+}
+
+.card-img {
+  width: 50px;
+  height: 50px;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.card-icon {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+  max-width: 60px;
+  max-height: 60px;
+}
+
+.card[data-name*="Weekly Day Pass"] .card-img,
+.card[data-name*="Starlight"] .card-img {
+  width: 50px;
+  height: 50px;
+}
+
+.card[data-name*="Weekly Day Pass"] .card-icon,
+.card[data-name*="Starlight"] .card-icon {
+  width: 45px;
+  height: 45px;
+  max-width: 120px;
+  max-height: 120px;
+}
+
+.card h4 {
+  margin: 0;
+  font-size: 11px;
+  font-family: 'Utendo', sans-serif;
+  font-weight: bold;
+}
+
+.card p {
+  margin: 2px 0 0 0;
+  font-size: 12px;
+  font-family: 'Utendo', sans-serif;
+  font-weight: bold;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  background: #b8d8ed;
+}
+
+.card.selected {
+  background: #a8c8dd;
+  border: 2px solid #685AFF;
+  transform: scale(1.05);
+}
+
+/* JUDUL SECTION */
+
+h3 {
+  font-family: 'Utendo', sans-serif;
+  font-weight: bold;
+  font-size: 16px;
+  margin-top: 25px;
+  margin-bottom: 10px;
+  color: #000;
+}

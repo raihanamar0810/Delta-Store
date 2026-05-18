@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mobile Legends - Delta Store</title>
+
+<link rel="stylesheet" href="/shared.css">
+<link rel="stylesheet" href="ml.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Odor+Mean+Chey&family=Nunito+Sans&family=Quando&family=Odibee+Sans&family=Righteous&family=Utendo&family=Londrina+Solid&display=swap" rel="stylesheet"></head>
+
+<body>
+<div class="container">
+
+  <!-- CART POPUP -->
+  <div class="cart-popup" id="cartPopup">
+    <div class="cart-header">
+      <h3>Keranjang</h3>
+      <span id="closeCart">✕</span>
+    </div>
+    <div id="cart-items"></div>
+    <div class="cart-total">Total: <span id="total-price">Rp0</span></div>
+    <div class="cart-section-title">Metode Pembayaran</div>
+    <div class="cart-payment" onclick="selectCartPayment('QRIS', this)">
+      <img src="/assets/qris.png"><span>Pembayaran QRIS</span>
+    </div>
+    <div class="cart-payment" onclick="selectCartPayment('Bank', this)">
+      <img src="/assets/bankjago.png"><span>Pembayaran Bank</span>
+    </div>
+    <input type="hidden" id="selectedPayment" value="">
+    <div class="cart-section-title">No WhatsApp</div>
+    <input type="text" id="cartWhatsapp" placeholder="Contoh: 08123456789"
+      style="width:100%;padding:10px;border-radius:8px;border:1px solid #ddd;font-size:13px;box-sizing:border-box;margin-bottom:12px;">
+    <button id="checkoutBtn">Buat Pesanan</button>
+  </div>
+
+  <!-- HEADER -->
+  <div class="header">
+    <a href="/index/index.html" class="back-btn">←</a>
+    <a href="/index/index.html" class="logo">
+      <img src="/assets/logo intro.png">
+      <span>Delta Store</span>
+    </a>
+    <div class="search-cart">
+      <div class="search-box">
+        <input type="text" id="searchBar" placeholder="Cari...">
+        <span class="clear-btn" id="clearSearch">✕</span>
+        <div id="searchResults"></div>
+      </div>
+      <div class="cart" id="cart">🛒 <span id="cart-count">0</span></div>
+    </div>
+  </div>
+
+  <!-- APP TITLE -->
+  <div class="app-title">
+    <img src="/assets/ml.png">
+    <span>Mobile Legends</span>
+  </div>
+
+  <!-- USER ID FORM -->
+  <div class="box user-box">
+    <div class="box-title user-title">🎮 Masukan Id Pengguna & Server</div>
+    <div class="user-inputs">
+      <div class="input-group">
+        <label>Id Pengguna</label>
+        <input type="text" id="userId" placeholder="Contoh: 23455293">
+      </div>
+      <div class="input-group">
+        <label>Id Server</label>
+        <input type="text" id="serverId" placeholder="Contoh: 2456">
+      </div>
+    </div>
+    <p class="user-info">
+      Untuk Menemukan Id Pengguna anda, Klik avatar anda di pojok kiri atas layar
+      dan buka tab info umum ID Pengguna Anda akan ditampilkan di bawah nama
+      Panggilan Anda. Silakan Masukan ID Pengguna Lengkap disini misal.
+      <strong>23455293 (2456).
+    </p>
+  </div>
+
+  <!-- SPECIAL ITEM -->
+  <h3>Special Item</h3>
+  <div class="paket">
+    <div class="card" data-name="Weekly Day Pass ML" data-price="27.500">
+      <div class="card-img"><img src="/assets/wdp.png" alt="Weekly Day Pass" class="card-icon" ></div>
+      <h4>Weekly Day Pass</h4><p>Rp.27.500</p>
+    </div>
+    <div class="card" data-name="Weekly Day Pass x2 ML" data-price="55.000">
+      <div class="card-img"><img src="/assets/wdp.png" alt="Weekly Day Pass x2" class="card-icon"></div>
+      <h4>Weekly Day Pass x2</h4><p>Rp.55.000</p>
+    </div>
+    <div class="card" data-name="Weekly Day Pass x3 ML" data-price="82.500">
+      <div class="card-img"><img src="/assets/wdp.png" alt="Weekly Day Pass x3" class="card-icon"></div>
+      <h4>Weekly Day Pass x3</h4><p>Rp.82.500</p>
+    </div>
+    <div class="card" data-name="Weekly Day Pass x4 ML" data-price="110.000">
+      <div class="card-img"><img src="/assets/wdp.png" alt="Weekly Day Pass x4" class="card-icon"></div>
+      <h4>Weekly Day Pass x4</h4><p>Rp.110.000</p>
+    </div>
+    <div class="card" data-name="Weekly Day Pass x5 ML" data-price="137.500">
+      <div class="card-img"><img src="/assets/wdp.png" alt="Weekly Day Pass x5" class="card-icon"></div>
+      <h4>Weekly Day Pass x5</h4><p>Rp.137.500</p>
+    </div>
+    <div class="card" data-name="Starlight Basic ML" data-price="37.000">
+      <div class="card-img"><img src="/assets/starlight basic.png" alt="Starlight Basic" class="card-icon"></div>
+      <h4>Starlight Basic</h4><p>Rp.37.000</p>
+    </div>
+    <div class="card" data-name="Starlight Premium ML" data-price="76.000">
+      <div class="card-img"><img src="/assets/starlight premium.png" alt="Starlight Premium" class="card-icon"></div>
+      <h4>Starlight Premium</h4><p>Rp.76.000</p>
+    </div>
+  </div>
+
+  <!-- PROMO -->
+  <h3>Promo</h3>
+  <div class="paket">
+    <div class="card" data-name="88 Diamond ML" data-price="23.409">
+      <div class="card-img"><img src="/assets/diamond.png" class="card-icon"></div>
+      <h4>88 Diamond</h4><p>Rp.23.409</p>
+    </div>
+    <div class="card" data-name="100 Diamond ML" data-price="25.546">
+      <div class="card-img"><img src="/assets/diamond.png" class="card-icon"></div>
+      <h4>100 Diamond</h4><p>Rp.25.546</p>
+    </div>
+    <div class="card" data-name="518 Diamond ML" data-price="132.276">
+      <div class="card-img"><img src="/assets/diamond.png" class="card-icon"></div>
+      <h4>518 Diamond</h4><p>Rp.132.276</p>
+    </div>
+  </div>
+
+  <!-- DIAMOND -->
+  <h3>Diamond</h3>
+  <div class="paket">
+    <div class="card" data-name="5 Diamond ML" data-price="1.581"><div class="card-img"><img src="/assets/diamond.png" class="card-icon"></div><h4>5 Diamond</h4><p>Rp.1.581</p></div>
+    <div class="card" data-name="12 Diamond ML" data-price="3.526"><div class="card-img"><img src="/assets/diamond.png" class="card-icon"></div><h4>12 Diamond</h4><p>Rp.3.526</p></div>
+    <div class="card" data-name="19 Diamond ML" data-price="5.000"><div class="card-img"><img src="/assets/diamond.png" class="card-icon"></div><h4>19 Diamond</h4><p>Rp.5.000</p></div>
+    <div class="card" data-name="22 Diamond ML" data-price="5.760"><div class="card-img"><img src="/assets/diamond.png" class="card-icon"></div><h4>22 Diamond</h4><p>Rp.5.760</p></div>
+    <div class="card" data-name="28 Diamond ML" data-price="7.234"><div class="card-img"><img src="/assets/diamond.png" class="card-icon"></div><h4>28 Diamond</h4><p>Rp.7.234</p></div>
+    <div class="card" data-name="33 Diamond ML" data-price="9.243"><div class="card-img"><img src="/assets/diamond.png" class="card-icon"></div><h4>33 Diamond</h4><p>Rp.9.243</p></div>
+    <div class="card" data-name="74 Diamond ML" data-price="19.000"><div class="card-img"><img src="/assets/diamond.png" class="card-icon"></div><h4>74 Diamond</h4><p>Rp.19.000</p></div>
+    <div class="card" data-name="86 Diamond ML" data-price="21.378"><div class="card-img"><img src="/assets/diamond.png" class="card-icon"></div><h4>86 Diamond</h4><p>Rp.21.378</p></div>
+    <div class="card" data-name="110 Diamond ML" data-price="28.789"><div class="card-img"><img src="/assets/diamond.png" class="card-icon"></div><h4>110 Diamond</h4><p>Rp.28.789</p></div>
+    <div class="card" data-name="153 Diamond ML" data-price="39.796"><div class="card-img"><img src="/assets/diamond.png" class="card-icon"></div><h4>153 Diamond</h4><p>Rp.39.796</p></div>
+    <div class="card" data-name="167 Diamond ML" data-price="43.432"><div class="card-img"><img src="/assets/diamond.png" class="card-icon"></div><h4>167 Diamond</h4><p>Rp.43.432</p></div>
+    <div class="card" data-name="172 Diamond ML" data-price="44.390"><div class="card-img"><img src="/assets/diamond.png" class="card-icon"></div><h4>172 Diamond</h4><p>Rp.44.390</p></div>
+    <div class="card" data-name="284 Diamond ML" data-price="73.578"><div class="card-img"><img src="/assets/diamond.png" class="card-icon"></div><h4>284 Diamond</h4><p>Rp.73.578</p></div>
+    <div class="card" data-name="305 Diamond ML" data-price="79.189"><div class="card-img"><img src="/assets/diamond.png" class="card-icon"></div><h4>305 Diamond</h4><p>Rp.79.189</p></div>
+    <div class="card" data-name="344 Diamond ML" data-price="88.375"><div class="card-img"><img src="/assets/diamond.png" class="card-icon"></div><h4>344 Diamond</h4><p>Rp.88.375</p></div>
+    <div class="card" data-name="568 Diamond ML" data-price="152.358"><div class="card-img"><img src="/assets/diamond.png" class="card-icon"></div><h4>568 Diamond</h4><p>Rp.152.358</p></div>
+    <div class="card" data-name="706 Diamond ML" data-price="175.590"><div class="card-img"><img src="/assets/diamond.png" class="card-icon"></div><h4>706 Diamond</h4><p>Rp.175.590</p></div>
+    <div class="card" data-name="738 Diamond ML" data-price="185.804"><div class="card-img"><img src="/assets/diamond.png" class="card-icon"></div><h4>738 Diamond</h4><p>Rp.185.804</p></div>
+    <div class="card" data-name="1050 Diamond ML" data-price="258.590"><div class="card-img"><img src="/assets/diamond.png" class="card-icon"></div><h4>1050 Diamond</h4><p>Rp.258.590</p></div>
+    <div class="card" data-name="1159 Diamond ML" data-price="286.876"><div class="card-img"><img src="/assets/diamond.png" class="card-icon"></div><h4>1159 Diamond</h4><p>Rp.286.876</p></div>
+    <div class="card" data-name="1220 Diamond ML" data-price="301.721"><div class="card-img"><img src="/assets/diamond.png" class="card-icon"></div><h4>1220 Diamond</h4><p>Rp.301.721</p></div>
+    <div class="card" data-name="2380 Diamond ML" data-price="564.890"><div class="card-img"><img src="/assets/diamond.png" class="card-icon"></div><h4>2380 Diamond</h4><p>Rp.564.890</p></div>
+    <div class="card" data-name="3688 Diamond ML" data-price="887.409"><div class="card-img"><img src="/assets/diamond.png" class="card-icon"></div><h4>3688 Diamond</h4><p>Rp.887.409</p></div>
+    <div class="card" data-name="4830 Diamond ML" data-price="1.140.567"><div class="card-img"><img src="/assets/diamond.png" class="card-icon"></div><h4>4830 Diamond</h4><p>Rp.1.140.567</p></div>
+    <div class="card" data-name="7502 Diamond ML" data-price="1.772.009"><div class="card-img"><img src="/assets/diamond.png" class="card-icon"></div><h4>7502 Diamond</h4><p>Rp.1.772.009</p></div>
+    <div class="card" data-name="8040 Diamond ML" data-price="1.883.984"><div class="card-img"><img src="/assets/diamond.png" class="card-icon"></div><h4>8040 Diamond</h4><p>Rp.1.883.984</p></div>
+    <div class="card" data-name="8850 Diamond ML" data-price="2.074.769"><div class="card-img"><img src="/assets/diamond.png" class="card-icon"></div><h4>8850 Diamond</h4><p>Rp.2.074.769</p></div>
+    <div class="card" data-name="16080 Diamond ML" data-price="3.762.615"><div class="card-img"><img src="/assets/diamond.png" class="card-icon"></div><h4>16.080 Diamond</h4><p>Rp.3.762.615</p></div>
+    <div class="card" data-name="20100 Diamond ML" data-price="4.702.717"><div class="card-img"><img src="/assets/diamond.png" class="card-icon"></div><h4>20.100 Diamond</h4><p>Rp.4.702.717</p></div>
+    <div class="card" data-name="27864 Diamond ML" data-price="6.535.092"><div class="card-img"><img src="/assets/diamond.png" class="card-icon"></div><h4>27.864 Diamond</h4><p>Rp.6.535.092</p></div>
+  </div>
+
+</div>
+
+<script src="/cart.js"></script>
+<script src="ml.js"></script>
+<script src="/search.js"></script>
+
+</body>
+</html>

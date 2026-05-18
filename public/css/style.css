@@ -1,0 +1,398 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #4fa3b1, #ff6f61);
+  background-size: cover;
+  overflow-y: scroll;
+}
+
+/* ========================
+   CONTAINER
+======================== */
+
+.container {
+  width: 380px;
+  max-width: 380px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* ========================
+   LOADING SCREEN
+======================== */
+
+#loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(180deg, #4fa3b1, #ff6f61);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: opacity 0.5s ease;
+}
+
+.loading-logo {
+  width: 300px;
+  max-width: 80%;
+  animation: pulseLogo 1.5s ease-in-out infinite;
+  object-fit: contain;
+}
+
+.loading-text {
+  font-family: 'Odor Mean Chey';
+  color: white;
+  letter-spacing: 3px;
+  margin-top: 15px;
+  animation: fadeInUp 0.8s ease forwards;
+  opacity: 0;
+}
+
+@keyframes pulseLogo {
+  0%   { transform: scale(1);   opacity: 1; }
+  50%  { transform: scale(1.1); opacity: 0.8; }
+  100% { transform: scale(1);   opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ========================
+   HEADER
+======================== */
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: nowrap;
+  position: relative;
+  z-index: 30;
+}
+
+/* ========================
+   LOGO
+======================== */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: white;
+  font-size: 20px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.logo img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.logo span {
+  font-family: 'Odor Mean Chey', cursive;
+  white-space: nowrap;
+}
+
+/* ========================
+   SEARCH + CART
+======================== */
+
+.search-cart {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.search-box {
+  position: relative;
+}
+
+/* DEFAULT — Mobile */
+.search-box input {
+  width: 115px;
+  height: 20px;
+  padding: 5px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.3);
+  background: rgba(255,255,255,0.25);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: rgba(0,0,0,0.7);
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 14px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+  box-sizing: content-box;
+}
+
+.clear-btn {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+  cursor: pointer;
+  display: none;
+  color: rgba(0,0,0,0.5);
+}
+
+#searchResults {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  width: 280px;
+  max-height: 300px;
+  overflow-y: auto;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  display: none;
+  z-index: 1000;
+}
+
+/* DEFAULT — Mobile */
+.cart {
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  position: relative;
+  flex-shrink: 0;
+  z-index: 30;
+}
+
+#cart-count {
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  background: red;
+  color: white;
+  font-size: 10px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ========================
+   SECTION TITLE
+======================== */
+
+.section-title {
+  width: 170px;
+  margin: 25px auto 14px;
+  background: white;
+  padding: 10px 20px;
+  text-align: center;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 17px;
+  font-family: 'Madimi One';
+}
+
+/* ========================
+   PREMIUM GRID (APP CARDS)
+======================== */
+
+.premium-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.card {
+  height: 48px;
+  display: flex;
+  align-items: center;
+  border-radius: 20px;
+  padding: 0;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+}
+
+.app-card {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  width: 100%;
+  height: 100%;
+  padding-left: 12px;
+  box-sizing: border-box;
+}
+
+.app-card img {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.app-card span {
+  font-size: 13px;
+  font-family: 'Mouse Memoirs';
+}
+
+.netflix  { background: #000000; }
+.spotify  { background: #000000; }
+.capcut   { background: #F1F1F1; }
+.alight   { background: #162339; }
+.youtube  { background: #000000; }
+.tiktok   { background: #000000; }
+
+.netflix  .app-card span { color: white; }
+.spotify  .app-card span { color: white; }
+.capcut   .app-card span { color: black; }
+.alight   .app-card span { color: white; }
+.youtube  .app-card span { color: white; }
+.tiktok   .app-card span { color: white; }
+
+/* ALIGHT — class khusus */
+.alight-icon {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.alight-icon img {
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.alight-icon span {
+  font-size: 13px;
+  font-family: 'Mouse Memoirs';
+  color: white;
+  margin-left: -15px;
+}
+
+/* ========================
+   GAME GRID
+======================== */
+
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.game-card {
+  height: 48px;
+  border-radius: 15px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 12px;
+  gap: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  transition: all 0.3s ease;
+}
+
+.game-card img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.game-card span {
+  font-size: 13px;
+  font-family: 'Mouse Memoirs';
+}
+
+.game-card:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+}
+
+.blue { background: #48A7E2; }
+.red  { background: #DB333F; }
+.blue span { color: white; }
+.red  span { color: white; }
+
+/* ========================
+   SOCIAL MEDIA GRID
+======================== */
+
+.social-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 14px;
+  margin-bottom: 30px;
+}
+
+.social-card {
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 16px;
+  gap: 10px;
+  border-radius: 20px;
+  text-decoration: none;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  transition: all 0.3s ease;
+}
+
+.social-card.whatsapp {
+  grid-column: 1 / -1;
+  width: 100%;
+  justify-content: center;
+}
+
+.social-card img {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
+
+.social-card span {
+  font-family: 'Mouse Memoirs';
+  font-size: 13px;
+  color: white;
+}
+
+.social-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+}
+
+.instagram { background: #000000; }
+.whatsapp  { background: #000000; }
+
+.social-grid .tiktok { background: #000000; }
+.social-grid .tiktok span { color: white; }

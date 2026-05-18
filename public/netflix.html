@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Netflix Package</title>
+
+<link rel="stylesheet" href="/shared.css">
+<link rel="stylesheet" href="netflix.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Odor+Mean+Chey&family=Nunito+Sans&family=Quando&family=Odibee+Sans&family=Righteous&display=swap" rel="stylesheet">
+
+</head>
+<body>
+
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="header">
+
+    <a href="/index/index.html" class="back-btn">←</a>
+
+    <a href="/index/index.html" class="logo">
+      <img src="/assets/logo intro.png">
+      <span>Delta Store</span>
+    </a>
+
+    <div class="search-cart">
+      <div class="search-box">
+        <input type="text" id="searchBar" placeholder="Cari...">
+        <span class="clear-btn" id="clearSearch">✕</span>
+        <div id="searchResults"></div>
+      </div>
+      <div class="cart" id="cart">
+        🛒 <span id="cart-count">0</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- APP TITLE -->
+  <div class="app-title">
+    <img src="/assets/netflix.png">
+    <span>Netflix</span>
+  </div>
+
+  <!-- SHARING -->
+  <h3>Sharing</h3>
+  <div class="paket">
+    <div class="card" data-name="1u1p Netflix" data-price="27.000">
+      <h4>1u1p</h4>
+      <p>Rp.27.000</p>
+    </div>
+    <div class="card" data-name="1u2p Netflix" data-price="17.000">
+      <h4>1u2p</h4>
+      <p>Rp.17.000</p>
+    </div>
+  </div>
+
+  <!-- PRIVATE -->
+  <h3>Private</h3>
+  <div class="paket">
+    <div class="card" data-name="Private Netflix 720p" data-price="125.000">
+      <h4>Private (720p)</h4>
+      <p>Rp.125.000</p>
+    </div>
+  </div>
+
+</div>
+
+<script src="/cart.js"></script>
+<script src="netflix.js"></script>
+<script src="/search.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pembayaran - Delta Store</title>
+<link href="https://fonts.googleapis.com/css2?family=Odor+Mean+Chey&family=Nunito+Sans&family=Righteous&display=swap" rel="stylesheet">
+<style>
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Nunito Sans', sans-serif;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #4fa3b1, #ff6f61);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: white;
+  margin-bottom: 20px;
+  align-self: flex-start;
+  text-decoration: none;
+}
+.header img { width: 35px; height: 35px; border-radius: 50%; }
+.header span { font-family: 'Odor Mean Chey', cursive; font-size: 18px; }
+
+/* TIMER */
+.timer-box {
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 16px 30px;
+  text-align: center;
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 360px;
+  border: 2px solid rgba(255,255,255,0.3);
+}
+.timer-label { color: white; font-size: 13px; margin-bottom: 6px; opacity: 0.9; }
+.timer-countdown { color: white; font-size: 42px; font-family: 'Righteous'; letter-spacing: 4px; }
+.timer-countdown.urgent { color: #ffdd57; animation: pulse 1s infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+.timer-bar-wrap { background: rgba(255,255,255,0.2); border-radius: 10px; height: 6px; margin-top: 10px; overflow: hidden; }
+.timer-bar { background: white; height: 100%; border-radius: 10px; transition: width 1s linear; }
+
+/* PAYMENT BOX */
+.payment-box {
+  background: white;
+  border-radius: 20px;
+  padding: 24px;
+  width: 100%;
+  max-width: 360px;
+  margin-bottom: 16px;
+}
+.payment-title { font-family: 'Righteous'; font-size: 16px; color: #576A8F; margin-bottom: 16px; text-align: center; }
+
+.qris-wrap { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.qris-wrap img { width: 220px; height: 220px; border-radius: 12px; border: 2px solid #eee; }
+.qris-note { font-size: 12px; color: #999; text-align: center; }
+
+.bank-wrap { display: flex; flex-direction: column; gap: 14px; }
+.bank-logo { width: 80px; height: auto; margin-bottom: 4px; }
+.bank-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: #f5f0e0; border-radius: 10px; }
+.bank-row-left { display: flex; flex-direction: column; gap: 2px; }
+.bank-row-label { font-size: 11px; color: #999; }
+.bank-row-value { font-size: 16px; font-weight: bold; color: #333; font-family: 'Righteous'; letter-spacing: 1px; }
+.copy-btn { background: #576A8F; color: white; border: none; border-radius: 8px; padding: 6px 12px; font-size: 12px; cursor: pointer; }
+.copy-btn:active { background: #445570; }
+
+/* ORDER SUMMARY */
+.summary-box {
+  background: white;
+  border-radius: 20px;
+  padding: 20px;
+  width: 100%;
+  max-width: 360px;
+  margin-bottom: 16px;
+}
+.summary-title { font-family: 'Righteous'; font-size: 15px; color: #576A8F; margin-bottom: 12px; }
+.summary-item { display: flex; justify-content: space-between; font-size: 13px; padding: 6px 0; border-bottom: 1px solid #eee; color: #333; }
+.summary-total { display: flex; justify-content: space-between; font-size: 15px; font-weight: bold; padding-top: 10px; color: #576A8F; }
+
+/* ORDER CODE BOX */
+.order-code-box {
+  background: #f0f7ff;
+  border: 2px dashed #576A8F;
+  border-radius: 12px;
+  padding: 12px 16px;
+  margin-bottom: 12px;
+  text-align: center;
+}
+.order-code-label { font-size: 11px; color: #999; margin-bottom: 4px; }
+.order-code-value { font-family: 'Righteous'; font-size: 18px; color: #576A8F; letter-spacing: 1px; }
+
+.cancel-btn {
+  width: 100%;
+  max-width: 360px;
+  padding: 14px;
+  border: 2px solid rgba(255,255,255,0.5);
+  background: transparent;
+  color: white;
+  border-radius: 12px;
+  font-size: 14px;
+  cursor: pointer;
+  margin-bottom: 30px;
+  font-family: 'Nunito Sans', sans-serif;
+}
+.cancel-btn:hover { background: rgba(255,255,255,0.1); }
+
+/* EXPIRED OVERLAY */
+.expired-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.7);
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+}
+.expired-box { background: white; border-radius: 20px; padding: 30px; text-align: center; width: 300px; }
+.expired-icon { font-size: 50px; margin-bottom: 12px; }
+.expired-title { font-family: 'Righteous'; font-size: 20px; color: #e74c3c; margin-bottom: 8px; }
+.expired-msg { font-size: 13px; color: #666; margin-bottom: 20px; line-height: 1.5; }
+.expired-btn { width: 100%; padding: 12px; background: #576A8F; color: white; border: none; border-radius: 10px; font-size: 14px; cursor: pointer; }
+
+</style>
+</head>
+<body>
+
+<a href="{{ url('/') }}" class="header">
+  <img src="{{ asset('images/logo-intro.png') }}">
+  <span>Delta Store</span>
+</a>
+
+<!-- TIMER -->
+<div class="timer-box">
+  <div class="timer-label">Selesaikan pembayaran dalam</div>
+  <div class="timer-countdown" id="timerDisplay">05:00</div>
+  <div class="timer-bar-wrap">
+    <div class="timer-bar" id="timerBar"></div>
+  </div>
+</div>
+
+<!-- PAYMENT METHOD -->
+<div class="payment-box" id="paymentBox">
+  <div class="payment-title" id="paymentTitle">Metode Pembayaran</div>
+
+  <!-- QRIS -->
+  <div class="qris-wrap" id="qrisSection" style="display:none;">
+    <img src="{{ asset('images/qris.png') }}" alt="QRIS Barcode">
+    <p style="font-size:14px;font-weight:bold;color:#333;">Scan QR Code ini untuk membayar</p>
+    <p class="qris-note">Gunakan aplikasi m-banking atau e-wallet apapun yang mendukung QRIS</p>
+  </div>
+
+  <!-- BANK -->
+  <div class="bank-wrap" id="bankSection" style="display:none;">
+    <img src="{{ asset('images/bankjago.png') }}" class="bank-logo" alt="Bank Jago">
+    <div class="bank-row">
+      <div class="bank-row-left">
+        <span class="bank-row-label">Nama Pemilik</span>
+        <span class="bank-row-value">Delta Store</span>
+      </div>
+    </div>
+    <div class="bank-row">
+      <div class="bank-row-left">
+        <span class="bank-row-label">Nomor Rekening</span>
+        <span class="bank-row-value" id="bankNumber">109 4321 6789</span>
+      </div>
+      <button class="copy-btn" onclick="copyRekening()">Salin</button>
+    </div>
+    <div class="bank-row">
+      <div class="bank-row-left">
+        <span class="bank-row-label">Jumlah Transfer</span>
+        <span class="bank-row-value" id="bankTotal">Rp0</span>
+      </div>
+      <button class="copy-btn" onclick="copyTotal()">Salin</button>
+    </div>
+    <p style="font-size:11px;color:#999;text-align:center;">
+      Mohon transfer sesuai nominal agar pesanan dapat diproses otomatis
+    </p>
+  </div>
+</div>
+
+<!-- ORDER SUMMARY -->
+<div class="summary-box">
+  <div class="summary-title">📋 Ringkasan Pesanan</div>
+
+  <div class="order-code-box">
+    <div class="order-code-label">Kode Pesanan</div>
+    <div class="order-code-value" id="orderCodeDisplay">-</div>
+  </div>
+
+  <div id="summaryItems">
+    <div style="text-align:center;color:#999;padding:12px;font-size:13px;">Memuat pesanan...</div>
+  </div>
+  <div class="summary-total">
+    <span>Total</span>
+    <span id="summaryTotal">Rp0</span>
+  </div>
+</div>
+
+<!-- SUDAH BAYAR -->
+<button class="cancel-btn" id="waBtn" onclick="sudahBayar()"
+  style="background:rgba(255,255,255,0.2);border:2px solid white;font-weight:bold;margin-bottom:10px;">
+  ✅ Saya Sudah Bayar — Kirim Bukti via WhatsApp
+</button>
+
+<!-- CANCEL -->
+<button class="cancel-btn" onclick="cancelOrder()">Batalkan Pesanan</button>
+
+<!-- EXPIRED OVERLAY -->
+<div class="expired-overlay" id="expiredOverlay">
+  <div class="expired-box">
+    <div class="expired-icon">⏰</div>
+    <div class="expired-title">Waktu Habis!</div>
+    <p class="expired-msg">Waktu pembayaran telah habis. Pesanan kamu otomatis dibatalkan. Silakan order kembali.</p>
+    <button class="expired-btn" onclick="goHome()">Kembali ke Beranda</button>
+  </div>
+</div>
+
+<script>
+
+var API_BASE = "{{ url('/api') }}";
+
+var orderCode     = localStorage.getItem("deltaOrderCode");
+var orderTotal    = localStorage.getItem("deltaOrderTotal");
+var paymentMethod = localStorage.getItem("deltaPaymentMethod");
+
+if (!orderCode) {
+  window.location.href = "{{ url('/') }}";
+}
+
+document.getElementById("orderCodeDisplay").textContent = orderCode || "-";
+
+if (paymentMethod === "QRIS") {
+  document.getElementById("paymentTitle").textContent = "💳 Pembayaran QRIS";
+  document.getElementById("qrisSection").style.display = "flex";
+} else {
+  document.getElementById("paymentTitle").textContent = "🏦 Pembayaran Bank Jago";
+  document.getElementById("bankSection").style.display = "flex";
+}
+
+var totalAmount = parseInt(orderTotal) || 0;
+
+async function loadOrderDetail() {
+  try {
+    var res  = await fetch(API_BASE + "/orders/" + orderCode);
+    var data = await res.json();
+
+    if (!res.ok) {
+      document.getElementById("summaryItems").innerHTML =
+        '<div style="text-align:center;color:#999;font-size:13px;">Pesanan tidak ditemukan.</div>';
+      return;
+    }
+
+    var summaryEl = document.getElementById("summaryItems");
+    summaryEl.innerHTML = "";
+    var total = 0;
+
+    data.items.forEach(function (item) {
+      var subtotal = item.price * item.quantity;
+      total += subtotal;
+
+      summaryEl.innerHTML += `
+        <div class="summary-item">
+          <span>${item.product_name}${item.quantity > 1 ? ' x' + item.quantity : ''}</span>
+          <span>Rp${subtotal.toLocaleString("id-ID")}</span>
+        </div>
+      `;
+    });
+
+    totalAmount = total;
+    document.getElementById("summaryTotal").textContent = "Rp" + total.toLocaleString("id-ID");
+    document.getElementById("bankTotal").textContent    = "Rp" + total.toLocaleString("id-ID");
+
+  } catch (e) {
+    document.getElementById("summaryItems").innerHTML =
+      '<div style="text-align:center;color:#aaa;font-size:12px;">Detail pesanan tidak dapat dimuat.</div>';
+    document.getElementById("summaryTotal").textContent = "Rp" + totalAmount.toLocaleString("id-ID");
+    document.getElementById("bankTotal").textContent    = "Rp" + totalAmount.toLocaleString("id-ID");
+  }
+}
+
+loadOrderDetail();
+
+var TOTAL_SECONDS = 5 * 60;
+var secondsLeft   = TOTAL_SECONDS;
+
+var timerDisplay = document.getElementById("timerDisplay");
+var timerBar     = document.getElementById("timerBar");
+
+function updateTimer() {
+  var minutes = Math.floor(secondsLeft / 60);
+  var seconds = secondsLeft % 60;
+  timerDisplay.textContent = String(minutes).padStart(2,"0") + ":" + String(seconds).padStart(2,"0");
+
+  var percent = (secondsLeft / TOTAL_SECONDS) * 100;
+  timerBar.style.width = percent + "%";
+
+  if (secondsLeft <= 60) {
+    timerDisplay.classList.add("urgent");
+    timerBar.style.background = "#ffdd57";
+  }
+
+  if (secondsLeft <= 0) {
+    clearInterval(timerInterval);
+    expiredOrder();
+    return;
+  }
+  secondsLeft--;
+}
+
+updateTimer();
+var timerInterval = setInterval(updateTimer, 1000);
+
+async function expiredOrder() {
+  try {
+    await fetch(API_BASE + "/orders/" + orderCode + "/cancel", { method: "PATCH" });
+  } catch (e) {}
+
+  document.getElementById("expiredOverlay").style.display = "flex";
+  localStorage.removeItem("deltaOrderCode");
+  localStorage.removeItem("deltaOrderTotal");
+  localStorage.removeItem("deltaPaymentMethod");
+}
+
+function goHome() {
+  window.location.href = "{{ url('/') }}";
+}
+
+async function cancelOrder() {
+  if (!confirm("Yakin ingin membatalkan pesanan?")) return;
+
+  clearInterval(timerInterval);
+
+  try {
+    await fetch(API_BASE + "/orders/" + orderCode + "/cancel", { method: "PATCH" });
+  } catch (e) {}
+
+  localStorage.removeItem("deltaOrderCode");
+  localStorage.removeItem("deltaOrderTotal");
+  localStorage.removeItem("deltaPaymentMethod");
+  window.location.href = "{{ url('/') }}";
+}
+
+function copyRekening() {
+  navigator.clipboard.writeText("10943216789");
+  showToast("✅ Nomor rekening disalin!");
+}
+
+function copyTotal() {
+  navigator.clipboard.writeText(String(totalAmount));
+  showToast("✅ Nominal disalin!");
+}
+
+function showToast(msg) {
+  var toast = document.getElementById("toast");
+  if (!toast) {
+    toast = document.createElement("div");
+    toast.id = "toast";
+    toast.style.cssText =
+      "position:fixed;bottom:30px;left:50%;transform:translateX(-50%);" +
+      "background:rgba(0,0,0,0.8);color:white;padding:10px 20px;" +
+      "border-radius:20px;font-size:13px;z-index:9999;transition:opacity 0.3s ease;white-space:nowrap;";
+    document.body.appendChild(toast);
+  }
+  toast.textContent = msg;
+  toast.style.opacity = "1";
+  clearTimeout(toast._t);
+  toast._t = setTimeout(function () { toast.style.opacity = "0"; }, 2000);
+}
+
+function sudahBayar() {
+    var adminPhone = "6281770281646"; // Ganti dengan nomor WA admin (format 628xxx)
+
+    var orderItems = "";
+    var items = document.querySelectorAll(".summary-item");
+    items.forEach(function(item) {
+        var spans = item.querySelectorAll("span");
+        orderItems += "• " + spans[0].textContent + " - " + spans[1].textContent + "\n";
+    });
+
+    var total = document.getElementById("summaryTotal").textContent;
+    var kode  = document.getElementById("orderCodeDisplay").textContent;
+    var metode = paymentMethod === "QRIS" ? "QRIS" : "Transfer Bank Jago";
+
+    var pesan =
+        "Halo Admin Delta Store! 👋\n\n" +
+        "Saya sudah melakukan pembayaran.\n\n" +
+        "📋 *Detail Pesanan:*\n" +
+        "Kode: " + kode + "\n" +
+        "Metode: " + metode + "\n\n" +
+        "🛒 *Item:*\n" + orderItems + "\n" +
+        "💰 *Total: " + total + "*\n\n" +
+        "Terlampir bukti pembayaran saya. Mohon segera diproses. Terima kasih!";
+
+    var url = "https://wa.me/" + adminPhone + "?text=" + encodeURIComponent(pesan);
+    window.open(url, "_blank");
+}
+
+</script>
+</body>
+</html>
